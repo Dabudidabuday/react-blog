@@ -7,17 +7,26 @@ module.exports = {
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].[hash].js'
+        publicPath: '/',
+        filename: 'main.js'
     },
     devServer: {
-        port: 3000,
+        // port: 3000,
+        historyApiFallback: true,
     },
     plugins: [
-        new HTMLWebpackPlugin({template: './src/index.html'}),
+        new HTMLWebpackPlugin({
+            template: 'public/index.html',
+            filename: 'index.html'
+        }),
         new CleanWebpackPlugin()
     ],
     module: {
         rules: [
+            {
+                test: /\.js$/,
+                use: 'babel-loader'
+            },
             {
                 test: /\.(css|scss)$/,
                 use: ['style-loader', 'css-loader', 'sass-loader']
